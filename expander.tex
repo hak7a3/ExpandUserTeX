@@ -1,0 +1,24 @@
+% expander.tex
+\input{gathergetuser.tex}
+\begingroup
+\makeatletter
+\def\@LaTeXm@cros{%
+  \@lst{\documentclass}%
+  \@lst{\begin}%
+  \@lst{\end}%
+  \@lst{\textit}}%
+\def\@lst#1{\let#1\relax}%
+\@LaTeXm@cros
+\begingroup
+\lccode`\+=`\%
+\lowercase{\def\newcommand#1[#2]#3{+definition of \noexpand#1 is ommited}}%
+\newwrite\@tmpline
+\immediate\openout\@tmpline=tmpline\jobname.tex
+\read-1 to \@target
+\edef\@@temp{\@target}%
+\toks0\expandafter{\@@temp}%
+\immediate\write\@tmpline{\the\toks0}%
+\endgroup
+\endgroup
+\documentclass{article}
+\begin{document}\end{document}

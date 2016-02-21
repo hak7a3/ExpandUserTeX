@@ -1,0 +1,13 @@
+\makeatletter
+\newwrite\@gather@user@defined
+\immediate\openout\@gather@user@defined=gather\jobname.tex
+\let\@orig@argdef\@argdef
+\let\@orig@documentclasshook\@documentclasshook
+\def\@documentclasshook{%
+  \@orig@documentclasshook
+  \long\def\@argdef##1[##2]##3{%
+  \@orig@argdef##1[##2]{##3}%
+  \toks0{\def\@expand@unused{\newcommand{##1}[##2]{##3}}\@expand@unused}%
+  \immediate\write\@gather@user@defined{\the\toks0}}%  
+}%
+\makeatother
